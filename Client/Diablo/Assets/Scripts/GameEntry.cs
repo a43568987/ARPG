@@ -8,6 +8,12 @@ namespace Logic
     {
         private void Awake()
         {
+            // 初始化Unity设置: 锁帧、后台运行、高质量骨骼动画
+            Application.runInBackground = true;
+            Application.targetFrameRate = 60;
+            QualitySettings.vSyncCount = 0;
+            QualitySettings.blendWeights = BlendWeights.FourBones;
+
             GameManager.Instance.OnInitialize();
         }
 
@@ -15,7 +21,7 @@ namespace Logic
         {
             // Time.deltaTime大于0.1就不准确了
             float deltaTime = Time.deltaTime;
-            if(deltaTime > 0.1f)
+            if (deltaTime > 0.1f)
             {
                 deltaTime = 0.1f;
             }
