@@ -1,0 +1,227 @@
+fileFormatVersion: 2
+guid: cd493071d04acd34eb3571b1bf99d3d9
+timeCreated: 1551411313
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Blade_rope1
+    100002: Blade_rope2
+    100004: Blade_rope3
+    100006: Blade_rope4
+    100008: Blade_rope5
+    100010: Blade_rope6
+    100012: Blade_wing10
+    100014: Blade_wing11
+    100016: Blade_wing12
+    100018: Blade_wing13
+    100020: Blade_wing14
+    100022: Blade_wing15
+    100024: Blade_wing16
+    100026: Blade_wing17
+    100028: Blade_wing18
+    100030: Blade_wing19
+    100032: Blade_wing20
+    100034: Blade_wing21
+    100036: Blade_wing22
+    100038: Blade_wing23
+    100040: Blade_wing24
+    100042: Blade_wing25
+    100044: Blade_wing26
+    100046: Blade_wing27
+    100048: Blade_wing28
+    100050: Blade_wing29
+    100052: Blade_wing30
+    100054: Blade_wing31
+    100056: Blade_wing32
+    100058: Blade_wing33
+    100060: Blade_wing34
+    100062: Blade_wing35
+    100064: Blade_wing36
+    100066: Blade_wing37
+    100068: Blade_wing38
+    100070: Blade_wing39
+    100072: Blade_wing40
+    100074: Blade_wing41
+    100076: Blade_wing9
+    100078: group2200
+    100080: group2210
+    100082: group2211
+    100084: group2212
+    100086: group2213
+    100088: group2214
+    100090: group2215
+    100092: group463
+    100094: pPlane451
+    100096: pPlane452
+    100098: pPlane453
+    100100: pPlane454
+    100102: pPlane455
+    100104: pPlane466
+    100106: //RootNode
+    100108: StageF000Blade
+    100110: StageF000Blade 1
+    100112: Swing_Flag_model1
+    100114: Swing_Flag_model10
+    100116: Swing_Flag_model11
+    100118: Swing_Flag_model2
+    100120: Swing_Flag_model3
+    100122: Swing_Flag_model4
+    100124: Swing_Flag_model5
+    100126: Swing_Flag_model6
+    100128: Swing_Flag_model7
+    100130: Swing_Flag_model8
+    100132: Swing_Flag_model9
+    400000: Blade_rope1
+    400002: Blade_rope2
+    400004: Blade_rope3
+    400006: Blade_rope4
+    400008: Blade_rope5
+    400010: Blade_rope6
+    400012: Blade_wing10
+    400014: Blade_wing11
+    400016: Blade_wing12
+    400018: Blade_wing13
+    400020: Blade_wing14
+    400022: Blade_wing15
+    400024: Blade_wing16
+    400026: Blade_wing17
+    400028: Blade_wing18
+    400030: Blade_wing19
+    400032: Blade_wing20
+    400034: Blade_wing21
+    400036: Blade_wing22
+    400038: Blade_wing23
+    400040: Blade_wing24
+    400042: Blade_wing25
+    400044: Blade_wing26
+    400046: Blade_wing27
+    400048: Blade_wing28
+    400050: Blade_wing29
+    400052: Blade_wing30
+    400054: Blade_wing31
+    400056: Blade_wing32
+    400058: Blade_wing33
+    400060: Blade_wing34
+    400062: Blade_wing35
+    400064: Blade_wing36
+    400066: Blade_wing37
+    400068: Blade_wing38
+    400070: Blade_wing39
+    400072: Blade_wing40
+    400074: Blade_wing41
+    400076: Blade_wing9
+    400078: group2200
+    400080: group2210
+    400082: group2211
+    400084: group2212
+    400086: group2213
+    400088: group2214
+    400090: group2215
+    400092: group463
+    400094: pPlane451
+    400096: pPlane452
+    400098: pPlane453
+    400100: pPlane454
+    400102: pPlane455
+    400104: pPlane466
+    400106: //RootNode
+    400108: StageF000Blade
+    400110: StageF000Blade 1
+    400112: Swing_Flag_model1
+    400114: Swing_Flag_model10
+    400116: Swing_Flag_model11
+    400118: Swing_Flag_model2
+    400120: Swing_Flag_model3
+    400122: Swing_Flag_model4
+    400124: Swing_Flag_model5
+    400126: Swing_Flag_model6
+    400128: Swing_Flag_model7
+    400130: Swing_Flag_model8
+    400132: Swing_Flag_model9
+    2100000: F000_Flag01
+    2100002: F000_kh_flag_win_a
+    2100004: F000_WK2_Woodpattern
+    4300000: StageF000Blade
+    9500000: //RootNode
+    13700000: StageF000Blade 1
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

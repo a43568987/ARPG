@@ -1,0 +1,139 @@
+fileFormatVersion: 2
+guid: ff3c54e8b36c3af419566b5a54446aa4
+timeCreated: 1551411318
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: F000Megami
+    100004: F000Megami 1
+    400000: //RootNode
+    400002: F000Megami
+    400004: F000Megami 1
+    2100000: F000_WK2_Woodfence
+    2100002: F000_WK2_Green
+    2100004: F000_WK2_Rock_road
+    2100006: F000_WK2_MS_wall01
+    2100008: F000_WK2_G_godes04
+    2100010: F000_WK2_G_godes06
+    2100012: F000_WK2_G_godes03
+    2100014: F000_WK2_G_godes05
+    2100016: F000_WK2_G_godes07
+    2100018: F000_WK2_G_godes08
+    2100020: F000_WK2_G_godes09
+    2100022: F000_WK2_Road_stone01
+    2100024: F000_WK2_MS_road01
+    2100026: F000_WK2_G_godes02
+    2100028: F000_WK2_Rock
+    2100030: F000_WK2_Woodpattern
+    2100032: F000_WK2_Bush
+    2100034: F000_WK2_Nature01
+    2100036: F000_Leaf_shadow
+    2100038: F000_WK2_G_Statue01
+    2100040: F000_WK2_G_Statue02
+    2100042: F000_WK2_Step
+    2100044: F000_WK2_Isibasi_Renga
+    2100046: F000_WK2_Housewall_blue
+    2100048: F000_WK2_Green_Road02
+    2100050: F000_Dn_wall01
+    2100052: F000_WK2_Touyuka01
+    2100054: F000_cmn_Toudaiza02
+    2100056: F000_WK2_bef_Broken01
+    2100058: F000_WK2_Touhuchi01
+    2100060: F000_WK2_MS_wall02
+    2100062: F000_WK2_GoddesMark
+    2100064: F000_WK2_bef_roof01
+    2100066: F000_WK2_bef_roof02
+    2100068: F000_WK2_MS_wall03
+    2100070: F000_WK2_bef_Gate
+    2100072: F000_WK2_bef_wall06
+    2100074: F000_WK2_bef_wall05
+    2100076: F000_WK2_Green_Edge
+    2100078: F000_WK2_Trunk
+    2100080: F000_WK2_Leaf
+    2100082: F000_WK2_Woodbridge02
+    2100084: F000_WK2_Woodbridge01
+    4300000: F000Megami
+    9500000: //RootNode
+    13700000: F000Megami 1
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
