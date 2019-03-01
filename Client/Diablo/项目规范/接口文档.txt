@@ -1,0 +1,6 @@
+#### 接口文档
+实例：
+- 获取角色属性信息 
+    - float GetPlayerAttribute(EAttributeType type)
+    - 参数：角色信息类型
+    - 返回值：float数据
