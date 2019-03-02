@@ -323,9 +323,10 @@ GameObject:
   - component: {fileID: 4973854666208374}
   - component: {fileID: 95550110456928810}
   - component: {fileID: 195638322056277310}
+  - component: {fileID: 136108964036557038}
   m_Layer: 0
-  m_Name: Player
-  m_TagString: Player
+  m_Name: Enemy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -360,22 +361,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1857239965136162
-GameObject:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4002760543883592}
-  - component: {fileID: 65370367678339276}
-  m_Layer: 0
-  m_Name: Sword
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
 --- !u!1 &1895557030118184
 GameObject:
   m_ObjectHideFlags: 1
@@ -436,19 +421,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4002760543883592
-Transform:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1857239965136162}
-  m_LocalRotation: {x: -0.27678278, y: 0.6729176, z: 0.6577617, w: -0.19473806}
-  m_LocalPosition: {x: -0.21774875, y: 0.16963312, z: 0.038083848}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4287092945532814}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 94.423004, y: -0.000015258789, z: -0.000015258789}
 --- !u!4 &4048671501573988
 Transform:
   m_ObjectHideFlags: 1
@@ -596,8 +568,7 @@ Transform:
   m_LocalRotation: {x: 0.70640385, y: -0.02440202, z: -0.024421396, w: 0.7069666}
   m_LocalPosition: {x: -0.22806452, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1.0000001, z: 1.0000001}
-  m_Children:
-  - {fileID: 4002760543883592}
+  m_Children: []
   m_Father: {fileID: 4096939789872760}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -820,7 +791,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1666086373657074}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.4256854, y: -3.2781737e-16, z: 14.763581}
+  m_LocalPosition: {x: -11.027006, y: -8.2885436e-17, z: 3.7328281}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4959382712890590}
@@ -843,18 +814,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65370367678339276
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1857239965136162}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.24636555, y: 0.7523736, z: 0.23438643}
-  m_Center: {x: -0.06399655, y: 0.5166275, z: -0.2010312}
 --- !u!95 &95550110456928810
 Animator:
   serializedVersion: 3
@@ -864,7 +823,7 @@ Animator:
   m_GameObject: {fileID: 1666086373657074}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 454f4a4f80037ca4a85311be7c38c441, type: 3}
-  m_Controller: {fileID: 9100000, guid: 68f86b14c1a1f4f499eb13dddbbf4110, type: 2}
+  m_Controller: {fileID: 9100000, guid: 030d900f7e2f7c94baa8b25099bf547b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -873,6 +832,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!136 &136108964036557038
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1666086373657074}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1.9904649
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.8642703, z: 0}
 --- !u!137 &137201017406511844
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -888,7 +860,7 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: f50ed2cc81df73a4895534337aef505a, type: 2}
+  - {fileID: 2100000, guid: 2f92284d1a02437408b952068933025b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -947,7 +919,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 1.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

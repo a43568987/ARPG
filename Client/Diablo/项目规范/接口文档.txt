@@ -4,3 +4,55 @@
     - float GetPlayerAttribute(EAttributeType type)
     - 参数：角色信息类型
     - 返回值：float数据
+------------------------------------------------------------
+目前的简单伤害计算：最终伤害 = 己方攻击力 * (1 - 敌方防御/100)
+
+-Logic.GameManager.Instance.m_Character.GetData()
+    -float GetHealth()
+    -参数：玩家血量
+    返回值：float数据
+
+-Logic.GameManager.Instance.m_Character.GetData()
+    -float GetAttack()
+    -参数：玩家攻击
+    返回值：float数据
+
+-Logic.GameManager.Instance.m_Character.GetData()
+    -float GetDefend()
+    -参数：玩家防御
+    返回值：float数据
+
+-Logic.GameManager.Instance.m_Character.GetData()
+    -bool IsDead()
+    -参数：玩家是否死亡
+    返回值：bool数据
+
+---------------------------------------------------------------
+-Logic.GameManager.Instance.Dictionary<GameObject, Enemy>
+    -储存敌人gameobject对应Enemy脚本的字典
+    -传入敌人的gameobject，获取其Enemy脚本
+
+-Logic.GameManager.Instance.m_Enemies[i].GetController()
+    -GameObject GetEnemy()
+    -参数：获取敌人的gameobject
+    返回值：GameObject
+
+-Logic.GameManager.Instance.m_Enemies[i].GetData()
+    -float GetHealth()
+    -参数：敌人血量
+    返回值：float数据
+
+-Logic.GameManager.Instance.m_Enemies[i].GetData()
+    -float GetAttack()
+    -参数：敌人攻击
+    返回值：float数据
+
+-Logic.GameManager.Instance.m_Enemies[i].GetData()
+    -float GetDefend()
+    -参数：敌人防御
+    返回值：float数据
+
+-Logic.GameManager.Instance.m_Enemies[i].GetData()
+    -bool IsDead()
+    -参数：敌人是否死亡
+    返回值：bool数据
