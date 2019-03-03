@@ -33,7 +33,12 @@ namespace Logic
             HasInput = false;
             Data.Reset();
 
+            // 安卓手机点击移动，默认为鼠标左键
+#if !UNITY_EDITOR && UNITY_ANDROID
+            if (Input.GetMouseButtonDown(c_MouseLeftButton))
+#else
             if (Input.GetMouseButtonDown(c_MouseRightButton))
+#endif
             {
                 HasInput = true;
                 Data.screenPosition = Input.mousePosition;
@@ -52,6 +57,10 @@ namespace Logic
                         Data.clickedType = receiver.Type;
                         Data.clickedObjectID = receiver.ID;
                     }
+                }
+                else
+                {
+                    HasInput = false;
                 }
             }
         }

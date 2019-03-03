@@ -5,7 +5,8 @@
     {
         None,           // 无
         Player,         // 玩家
-        Monster,          // 敌人
+        Monster,        // 敌人
+        Bullet,         // 子弹
         NPC,            // NPC
         Box,            // 宝箱
         Other,          // 场景等

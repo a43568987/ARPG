@@ -13,12 +13,21 @@ namespace Logic
         private static readonly string s_AttackIdleAnimation = "Attack_Idle";
         private static readonly string s_DeadAnimation = "Dead";
 
-        private enum EEnemyState
+        private static readonly string s_DeadSound = "Sound/FootmanDeath";
+        private static readonly string s_AttackHitSound = "Sound/MonsterAttackHit";
+
+        private enum EMonsterState
         {
             Idle,
             Chase,
             Attack,
             Dead,
+        }
+
+        private enum EMonsterSound
+        {
+            AttackHit,
+            Death,
         }
 
         public bool CanDestroy
@@ -33,15 +42,19 @@ namespace Logic
         private Player m_AttackTarget;
         private Animator m_Animator;
         private NavMeshAgent m_NavAgent;
-        private EEnemyState m_State;
+        private EMonsterState m_State;
         private float m_AttackTimer;
         private float m_DestroyTimer;
+
+        private AudioSource m_SoundPlayer;
+        private AudioClip m_AttackHitClip;
+        private AudioClip m_DeadClip;
 
 
         public MonsterLogic(Monster owner)
         {
             m_Owner = owner;
-            m_State = EEnemyState.Idle;
+            m_State = EMonsterState.Idle;
             m_AttackTarget = GameManager.Instance.Player;
 
             m_Animator = m_Owner.gameObject.GetComponent<Animator>();
@@ -53,6 +66,11 @@ namespace Logic
             // 添加动画事件接收器
             AnimatorEventReceiver eventReceiver = m_Owner.gameObject.AddComponent<AnimatorEventReceiver>();
             eventReceiver.OnAnimatorEvent += OnAnimatorEvent;
+            // 添加声音控制器
+            m_SoundPlayer = m_Owner.gameObject.AddComponent<AudioSource>();
+            m_SoundPlayer.playOnAwake = false;
+            m_AttackHitClip = Resources.Load<AudioClip>(s_AttackHitSound);
+            m_DeadClip = Resources.Load<AudioClip>(s_DeadSound);
         }
 
         public void OnUpdate(float deltaTime)
@@ -63,7 +81,7 @@ namespace Logic
             }
             switch (m_State)
             {
-                case EEnemyState.Idle:
+                case EMonsterState.Idle:
                     if (!m_NavAgent.isStopped)
                     {
                         m_NavAgent.isStopped = true;
@@ -74,19 +92,19 @@ namespace Logic
                     }
                     else if (CanAttackPlayer())
                     {
-                        m_State = EEnemyState.Attack;
+                        m_State = EMonsterState.Attack;
                         m_Animator.CrossFade(s_AttackIdleAnimation, 0.2f);
                     }
                     else
                     {
-                        m_State = EEnemyState.Chase;
+                        m_State = EMonsterState.Chase;
                         m_Animator.CrossFade(s_MoveAnimation, 0.05f);
                     }
                     break;
-                case EEnemyState.Chase:
+                case EMonsterState.Chase:
                     if (CanAttackPlayer())
                     {
-                        m_State = EEnemyState.Attack;
+                        m_State = EMonsterState.Attack;
                         m_Animator.CrossFade(s_AttackIdleAnimation, 0.2f);
                     }
                     else
@@ -94,15 +112,15 @@ namespace Logic
                         MoveToPlayer();
                     }
                     break;
-                case EEnemyState.Attack:
+                case EMonsterState.Attack:
                     if (m_AttackTarget.IsDead)
                     {
-                        m_State = EEnemyState.Idle;
+                        m_State = EMonsterState.Idle;
                         m_Animator.CrossFade(s_IdleAnimation, 0.2f);
                     }
                     else if (!CanAttackPlayer())
                     {
-                        m_State = EEnemyState.Chase;
+                        m_State = EMonsterState.Chase;
                         m_Animator.CrossFade(s_MoveAnimation, 0.05f);
                     }
                     else
@@ -119,7 +137,7 @@ namespace Logic
                         }
                     }
                     break;
-                case EEnemyState.Dead:
+                case EMonsterState.Dead:
                     if (m_DestroyTimer > 0)
                     {
                         m_DestroyTimer -= deltaTime;
@@ -134,6 +152,7 @@ namespace Logic
             {
                 case EAnimatorEventType.Attack:
                     m_AttackTarget.BeDamaged(m_Owner.Data.Attack);
+                    PlaySound(EMonsterSound.AttackHit);
                     break;
                 case EAnimatorEventType.FootStep:
                     break;
@@ -143,7 +162,7 @@ namespace Logic
         private bool CanAttackPlayer()
         {
             // 非死亡状态且玩家在攻击范围内
-            return m_State != EEnemyState.Dead && Vector3.Distance(m_Owner.Position, m_AttackTarget.Position) < m_Owner.Data.AttackRange;
+            return m_State != EMonsterState.Dead && Vector3.Distance(m_Owner.Position, m_AttackTarget.Position) < m_Owner.Data.AttackRange;
         }
 
         public void MoveToPlayer()
@@ -162,13 +181,31 @@ namespace Logic
             {
                 m_Owner.Data.CurrentHealth = 0;
                 m_DestroyTimer = s_DelayDestroyTime;
-                m_State = EEnemyState.Dead;
+                m_State = EMonsterState.Dead;
                 m_NavAgent.enabled = false;
                 m_Animator.CrossFade(s_DeadAnimation, 0.1f);
+                PlaySound(EMonsterSound.Death);
 
                 m_Owner.gameObject.GetComponent<RaycastReceiver>().enabled = false;
                 m_Owner.gameObject.GetComponent<CapsuleCollider>().enabled = false;
             }
+        }
+
+        private void PlaySound(EMonsterSound soundType)
+        {
+            switch (soundType)
+            {
+                case EMonsterSound.AttackHit:
+                    m_SoundPlayer.clip = m_AttackHitClip;
+                    m_SoundPlayer.volume = 0.3f;
+                    break;
+                case EMonsterSound.Death:
+                    m_SoundPlayer.clip = m_DeadClip;
+                    m_SoundPlayer.volume = 1.0f;
+                    break;
+            }
+            m_SoundPlayer.loop = false;
+            m_SoundPlayer.Play();
         }
     }
 }

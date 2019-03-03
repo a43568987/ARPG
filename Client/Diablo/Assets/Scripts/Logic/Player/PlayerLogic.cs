@@ -1,17 +1,38 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
+using System.Collections.Generic;
 
 namespace Logic
 {
     public class PlayerLogic
     {
+        // 动画常量
         private static readonly string s_IdleAnimation = "Idle";
         private static readonly string s_MoveAnimation = "Move";
         private static readonly string s_AttackAnimation = "Attack";
         private static readonly string s_DeadAnimation = "Dead";
         private static readonly string s_AttackIdleAnimation = "Attack_Idle";
-        private static readonly float s_CrossFadeTime = 0.2f;
 
+        // 音效常量
+        private static readonly string s_ReadySound = "Sound/FootmanReady";
+        private static readonly string s_DeadSound = "Sound/FootmanDeath";
+        private static readonly string s_AttackHitSound = "Sound/FootmanAttackHit";
+        private static readonly List<string> s_MoveSoundList = new List<string>()
+        {
+            "Sound/FootmanYes1",
+            "Sound/FootmanYes2",
+            "Sound/FootmanYes3",
+            "Sound/FootmanYes4",
+        };
+        private static readonly List<string> s_AttackSoundList = new List<string>()
+        {
+            "Sound/FootmanYesAttack1",
+            "Sound/FootmanYesAttack2",
+            "Sound/FootmanYesAttack3",
+            "Sound/FootmanYesAttack4",
+        };
+
+        // 玩家状态
         private enum EPlayerState
         {
             Idle,       // 空闲状态
@@ -21,9 +42,22 @@ namespace Logic
             Dead,       // 死亡
         }
 
+        // 玩家音效
+        private enum EPlayerSound
+        {
+            Ready,      // 出生
+            Move,       // 移动
+            AttackMove, // 攻击移动
+            AttackHit,  // 攻击击中
+            Dead,       // 死亡
+        }
+
         private Player m_Owner;
         private Animator m_Animator;
         private NavMeshAgent m_NavAgent;
+        private AudioSource m_SoundPlayer;
+        private AudioSource m_AttackHitSoundPlayer;
+        private Dictionary<string, AudioClip> m_SoundDict;
         private EPlayerState m_State;
         private Vector3 m_MoveTarget;
         private Monster m_AttackTarget;
@@ -42,6 +76,27 @@ namespace Logic
             // 添加动画事件接收器
             AnimatorEventReceiver eventReceiver = m_Owner.gameObject.AddComponent<AnimatorEventReceiver>();
             eventReceiver.OnAnimatorEvent += OnAnimatorEvent;
+            // 添加声音控制器
+            m_SoundPlayer = m_Owner.gameObject.AddComponent<AudioSource>();
+            m_SoundPlayer.playOnAwake = false;
+            m_AttackHitSoundPlayer = m_Owner.gameObject.AddComponent<AudioSource>();
+            m_AttackHitSoundPlayer.playOnAwake = false;
+            m_AttackHitSoundPlayer.volume = 0.4f;
+            // 预加载音效
+            m_SoundDict = new Dictionary<string, AudioClip>();
+            foreach (var audioClip in s_MoveSoundList)
+            {
+                m_SoundDict.Add(audioClip, Resources.Load<AudioClip>(audioClip));
+            }
+            foreach (var audioClip in s_AttackSoundList)
+            {
+                m_SoundDict.Add(audioClip, Resources.Load<AudioClip>(audioClip));
+            }
+            m_SoundDict.Add(s_ReadySound, Resources.Load<AudioClip>(s_ReadySound));
+            m_SoundDict.Add(s_DeadSound, Resources.Load<AudioClip>(s_DeadSound));
+            m_SoundDict.Add(s_AttackHitSound, Resources.Load<AudioClip>(s_AttackHitSound));
+
+            PlaySound(EPlayerSound.Ready);
         }
 
         public void OnUpdate(float deltaTime)
@@ -71,13 +126,15 @@ namespace Logic
                         else
                         {
                             m_State = EPlayerState.Chase;
-                            m_Animator.CrossFade(s_MoveAnimation, s_CrossFadeTime);
+                            m_Animator.CrossFade(s_MoveAnimation, 0.2f);
                         }
+                        PlaySound(EPlayerSound.AttackMove);
                         break;
                     default:
                         m_State = EPlayerState.Move;
                         m_MoveTarget = inputData.worldPosition;
                         m_Animator.CrossFade(s_MoveAnimation, 0.05f);
+                        PlaySound(EPlayerSound.Move);
                         break;
                 }
             }
@@ -100,7 +157,7 @@ namespace Logic
                         m_Owner.Position = m_MoveTarget;
                         m_NavAgent.isStopped = true;
                         m_State = EPlayerState.Idle;
-                        m_Animator.CrossFade(s_IdleAnimation, s_CrossFadeTime);
+                        m_Animator.CrossFade(s_IdleAnimation, 0.2f);
                     }
                     if (m_NavAgent.isStopped)
                     {
@@ -151,6 +208,7 @@ namespace Logic
                 m_Owner.Data.CurrentHealth = 0;
                 m_State = EPlayerState.Dead;
                 m_Animator.CrossFade(s_DeadAnimation, 0.2f);
+                PlaySound(EPlayerSound.Dead);
             }
         }
 
@@ -160,6 +218,7 @@ namespace Logic
             {
                 case EAnimatorEventType.Attack:
                     m_AttackTarget.BeDamaged(m_Owner.Data.Attack);
+                    PlaySound(EPlayerSound.AttackHit);
                     break;
                 case EAnimatorEventType.FootStep:
                     // TODO:
@@ -174,6 +233,31 @@ namespace Logic
                 return false;
             }
             return Vector3.Distance(m_Owner.Position, m_AttackTarget.Position) < m_Owner.Data.AttackRange;
+        }
+
+        private void PlaySound(EPlayerSound soundType)
+        {
+            switch (soundType)
+            {
+                case EPlayerSound.Ready:
+                    m_SoundPlayer.clip = m_SoundDict[s_ReadySound];
+                    break;
+                case EPlayerSound.Move:
+                    m_SoundPlayer.clip = m_SoundDict[s_MoveSoundList[Random.Range(0, s_MoveSoundList.Count)]];
+                    break;
+                case EPlayerSound.AttackMove:
+                    m_SoundPlayer.clip = m_SoundDict[s_AttackSoundList[Random.Range(0, s_AttackSoundList.Count)]];
+                    break;
+                case EPlayerSound.AttackHit:
+                    m_AttackHitSoundPlayer.clip = m_SoundDict[s_AttackHitSound];
+                    m_AttackHitSoundPlayer.Play();
+                    return;
+                case EPlayerSound.Dead:
+                    m_SoundPlayer.clip = m_SoundDict[s_DeadSound];
+                    break;
+            }
+            m_SoundPlayer.loop = false;
+            m_SoundPlayer.Play();
         }
     }
 }

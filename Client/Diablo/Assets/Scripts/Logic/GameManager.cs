@@ -19,6 +19,14 @@ namespace Logic
         // 游戏初始化
         public void OnInitialize()
         {
+            // 播放BGM
+            GameObject soundRoot = new GameObject("SoundMgr");
+            soundRoot.hideFlags = HideFlags.HideInHierarchy | HideFlags.HideInInspector;
+            AudioSource m_BGMPlayer = soundRoot.AddComponent<AudioSource>();
+            m_BGMPlayer.clip = Resources.Load<AudioClip>("Sound/BGM");
+            m_BGMPlayer.loop = true;
+            m_BGMPlayer.volume = 0.6f;
+            m_BGMPlayer.Play();
             m_EnemyList = new List<Monster>();
             m_EnemyDict = new Dictionary<int, Monster>();
             // 创建主角
