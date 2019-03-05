@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 /// </summary>
 namespace Framework
 {
-    public class StartGame
+    public class StartGame : MonoBehaviour
     {
         public Button c_StartButton;//按钮
         public CanvasGroup c_StartGame;//使用CanvasGroup实现按钮的呼吸效果
@@ -31,7 +31,7 @@ namespace Framework
 
         public void StartButton()//场景跳转
         {
-            SceneManager.LoadScene("Main");
+            Logic.GameManager.Instance.SceneLoad(1);
         }
 
         public void ButttonFlash()//实现按钮呼吸效果

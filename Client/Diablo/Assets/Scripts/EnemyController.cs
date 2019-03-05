@@ -5,31 +5,33 @@ using UnityEngine.AI;
 
 public class EnemyController{
 
-    //角色控制信息
+    //敌人控制信息
     private GameObject m_Enemy = null;
-    public GameObject GetEnemy()
-    {
-        return m_Enemy;
-    }
     private Animator m_EnemyAnimator = null;
     private NavMeshAgent m_NavMeshAgent = null;
     private GameObject m_Player = null;
-
     private EnemyData m_EnemyData = null;
-    public void SetData(EnemyData data)
-    {
-        m_EnemyData = data;
-    }
     private CharacterController m_CharacterController = null;
-    public void SetController(CharacterController controller)
-    {
-        m_CharacterController = controller;
-    }
 
     private float m_TimerA = 0;
     private bool m_CDA = false;
     private float m_TimerB = 0;
     private bool m_CDB = false;
+
+    public GameObject GetEnemy()
+    {
+        return m_Enemy;
+    }
+    public void SetData(EnemyData data)
+    {
+        m_EnemyData = data;
+    }
+    public void SetController(CharacterController controller)
+    {
+        m_CharacterController = controller;
+    }
+
+    
 
     // Use this for initialization
     public void OnInitialize()
@@ -44,37 +46,75 @@ public class EnemyController{
     // Update is called once per frame
     public void OnUpdate(float deltaTime)
     {
+        EnemyControl();
+    }
+
+    private void EnemyControl()
+    {
+        EnemyMove();
+
+        EnemyAttack();
+
+        EnemyAttacked();
+
+        EnemyDead();
+    }
+
+    private void EnemyMove()
+    {
         //走向玩家
         if (m_EnemyData.m_Health >= 0)
         {
-            m_NavMeshAgent.SetDestination(m_Player.transform.position + (m_Enemy.transform.position - m_Player.transform.position).normalized * 5 / 4);
+            this.MoveToTarget(m_Player.transform.position + (m_Enemy.transform.position - m_Player.transform.position).normalized * 5 / 4);
         }
+        m_EnemyAnimator.SetFloat("MoveSpeed", m_NavMeshAgent.velocity.magnitude);
+    }
+
+    private void MoveToTarget(Vector3 target)
+    {
+        m_NavMeshAgent.SetDestination(target);
+    }
+
+    private void EnemyAttack()
+    {
         //判断距离并开始攻击
-        if (Vector3.Distance(m_Enemy.transform.position, m_Player.transform.position) <= 1.8)
+        if (this.GetDistance() <= 1.8)
         {
-            m_Enemy.transform.rotation = Quaternion.Lerp(m_Enemy.transform.rotation, Quaternion.LookRotation(m_Player.transform.position - m_Enemy.transform.position), Time.deltaTime);
+            TurnToPlayer();
             m_EnemyAnimator.SetBool("IsAttacking", true);
         }
         else
         {
             m_EnemyAnimator.SetBool("IsAttacking", false);
         }
-        m_EnemyAnimator.SetFloat("MoveSpeed", m_NavMeshAgent.velocity.magnitude);
+    }
 
+    private float GetDistance()
+    {
+        return Vector3.Distance(m_Enemy.transform.position, m_Player.transform.position);
+    }
+
+    private void TurnToPlayer()
+    {
+        m_Enemy.transform.rotation = Quaternion.Lerp(m_Enemy.transform.rotation, Quaternion.LookRotation(m_Player.transform.position - m_Enemy.transform.position), Time.deltaTime * 2);
+    }
+
+    private void EnemyAttacked()
+    {
         AnimatorStateInfo animatorInfo;
         animatorInfo = m_EnemyAnimator.GetCurrentAnimatorStateInfo(0);
         if ((animatorInfo.normalizedTime >= 0.5f) && (animatorInfo.IsName("Attack_Style_A")))
         {
             if (m_CDA == false)
             {
-                m_CharacterController.GetHurt(m_EnemyData.m_Attack,m_EnemyData.m_Defend);
+                m_CharacterController.GetHurt(m_EnemyData.m_Attack, m_EnemyData.m_Defend);
                 m_CDA = true;
             }
         }
-        if(m_CDA == true)
+        if (m_CDA == true)
         {
             m_TimerA += Time.deltaTime;
-            if(m_TimerA >= 0.5)
+            if (m_TimerA >= 0.5)
             {
                 m_CDA = false;
                 m_TimerA = 0;
@@ -84,7 +124,7 @@ public class EnemyController{
         {
             if (m_CDB == false)
             {
-                m_CharacterController.GetHurt(m_EnemyData.m_Attack,m_EnemyData.m_Defend);
+                m_CharacterController.GetHurt(m_EnemyData.m_Attack, m_EnemyData.m_Defend);
                 m_CDB = true;
             }
         }
@@ -97,10 +137,14 @@ public class EnemyController{
                 m_TimerB = 0;
             }
         }
+    }
+
+    private void EnemyDead()
+    {
         if (m_EnemyData.m_Health <= 0)
         {
             m_EnemyAnimator.Play("Dead_Front");
-            
+
         }
     }
 

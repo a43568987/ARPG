@@ -8,7 +8,7 @@ public class CharacterController{
     private GameObject m_Player = null;
     private Animator m_PlayerAnimator = null;
     private NavMeshAgent m_NavMeshAgent = null;
-    private GameObject m_SelectedEnemy = null;
+    private GameObject m_SelectedEnemyGO = null;
 
     private CharacterData m_CharacterData = null;
     public void SetData(CharacterData data)
@@ -24,6 +24,7 @@ public class CharacterController{
     // Use this for initialization
     public void OnInitialize()
     {
+        
         m_Player = Object.Instantiate(Resources.Load<GameObject>("Prefab/Player/Player"));
         m_Player.transform.position = new Vector3(0, 0, 15);
         m_PlayerAnimator = m_Player.GetComponent<Animator>();
@@ -32,6 +33,59 @@ public class CharacterController{
 
     // Update is called once per frame
     public void OnUpdate(float deltaTime)
+    {
+        CharacterControl();
+    }
+
+    public void GetHurt(float attack, float defend)
+    {
+        m_CharacterData.m_Health -= attack * (1 - defend / 100);
+    }
+
+    private void CharacterControl()
+    {
+        CharacterMove();
+
+        CharacterAttack();
+
+        CharacterAttacked();
+
+        CharacterDead();
+    }
+
+    private void MoveToTarget(Vector3 target)
+    {
+        m_NavMeshAgent.SetDestination(target);
+    }
+
+    private void InputManager(GameObject AimObject, Vector3 target)
+    {
+        //点击鼠标右键移动或锁定敌人
+        if (Input.GetMouseButtonDown(1))
+        {
+
+            if (AimObject.tag == "Enemy")
+            {
+                m_SelectedEnemyGO = AimObject;
+                if (this.GetDistance() >= 2.6)
+                {
+                    MoveToTarget(target + (m_Player.transform.position - m_SelectedEnemyGO.transform.position).normalized * 2.5f);
+                }
+            }
+            else
+            {
+                m_SelectedEnemyGO = null;
+                MoveToTarget(target);
+            }
+        }
+    }
+
+    private float GetDistance()
+    {
+        return Vector3.Distance(m_Player.transform.position, m_SelectedEnemyGO.transform.position);
+    }
+
+    private void CharacterMove()
     {
         //射线检测，鼠标点击移动
         RaycastHit m_hitt = new RaycastHit();
@@ -44,32 +98,26 @@ public class CharacterController{
             m_target = m_hitt.point;
         }
 
-        //点击鼠标右键移动或锁定敌人
-        if (Input.GetMouseButtonDown(1))
-        {
-            
-            if (m_AimObject.tag == "Enemy")
-            {
-                m_SelectedEnemy = m_AimObject;
-                m_NavMeshAgent.SetDestination(m_target + (m_Player.transform.position-m_SelectedEnemy.transform.position).normalized * 4/3);
-            }
-            else
-            {
-                m_SelectedEnemy = null;
-                m_NavMeshAgent.SetDestination(m_target);
-            }
-        }
+        InputManager(m_AimObject, m_target);
+    }
+
+    private void CharacterAttack()
+    {
         //判断距离并开始攻击
-        if(m_SelectedEnemy != null)
+        if (m_SelectedEnemyGO != null)
         {
-            if (Vector3.Distance(m_Player.transform.position, m_SelectedEnemy.transform.position) <= 1.8)
+            if (this.GetDistance() <= 2.6)
             {
-                m_Player.transform.rotation = Quaternion.Lerp(m_Player.transform.rotation,Quaternion.LookRotation(m_SelectedEnemy.transform.position - m_Player.transform.position),Time.deltaTime);
+                this.TurnToEnemy();
                 m_PlayerAnimator.SetBool("IsAttacking", true);
             }
-            if (Logic.GameManager.Instance.EnemyDic[m_SelectedEnemy].GetData().m_IsDead)
+            if (this.GetEnemy().GetData().m_IsDead)
             {
-                m_SelectedEnemy = null;
+                m_SelectedEnemyGO = null;
+            }
+            if (this.GetEnemy().GetData().m_Health <= 0)
+            {
+                m_PlayerAnimator.SetBool("IsAttacking", false);
             }
         }
         else
@@ -77,7 +125,15 @@ public class CharacterController{
             m_PlayerAnimator.SetBool("IsAttacking", false);
         }
         m_PlayerAnimator.SetFloat("MoveSpeed", m_NavMeshAgent.velocity.magnitude);
+    }
+    
+    private void TurnToEnemy()
+    {
+        m_Player.transform.rotation = Quaternion.Lerp(m_Player.transform.rotation, Quaternion.LookRotation(m_SelectedEnemyGO.transform.position - m_Player.transform.position), Time.deltaTime * 2);
+    }
 
+    private void CharacterAttacked()
+    {
         //动画判定击中与扣血
         AnimatorStateInfo animatorInfo;
         animatorInfo = m_PlayerAnimator.GetCurrentAnimatorStateInfo(0);
@@ -85,7 +141,8 @@ public class CharacterController{
         {
             if (m_CDA == false)
             {
-                Logic.GameManager.Instance.EnemyDic[m_SelectedEnemy].GetController().GetHurt(m_CharacterData.m_Attack,m_CharacterData.m_Defend);
+                if (m_SelectedEnemyGO != null && !this.GetEnemy().GetData().m_IsDead)
+                    this.GetEnemy().GetController().GetHurt(m_CharacterData.m_Attack, m_CharacterData.m_Defend);
                 m_CDA = true;
             }
         }
@@ -102,7 +159,8 @@ public class CharacterController{
         {
             if (m_CDB == false)
             {
-                Logic.GameManager.Instance.EnemyDic[m_SelectedEnemy].GetController().GetHurt(m_CharacterData.m_Attack,m_CharacterData.m_Defend);
+                if (m_SelectedEnemyGO != null && !this.GetEnemy().GetData().m_IsDead)
+                    this.GetEnemy().GetController().GetHurt(m_CharacterData.m_Attack, m_CharacterData.m_Defend);
                 m_CDB = true;
             }
         }
@@ -115,21 +173,21 @@ public class CharacterController{
                 m_TimerB = 0;
             }
         }
+    }
 
-        Debug.Log(m_CharacterData.m_Health);
+    private Enemy GetEnemy()
+    {
+        return Logic.GameManager.Instance.EnemyDic[m_SelectedEnemyGO];
+    }
 
-
+    private void CharacterDead()
+    {;
         if (m_CharacterData.m_Health <= 0)
         {
             m_PlayerAnimator.Play("Dead_Front");
         }
-        
     }
 
-
-    public void GetHurt(float attack, float defend)
-    {
-        m_CharacterData.m_Health -= attack * (1-defend/100);
-    }
+    
     
 }
