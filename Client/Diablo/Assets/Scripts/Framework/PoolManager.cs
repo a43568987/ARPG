@@ -21,5 +21,10 @@ namespace Framework
         {
 
         }
+
+        public void OnUpdate(float deltaTime)
+        {
+
+        }
     }
 }

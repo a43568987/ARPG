@@ -33,11 +33,16 @@ namespace Logic
 
         public void OnUpdate(float deltaTime)
         {
+            // 框架层更新
+            TimerManager.Instance.OnUpdate(deltaTime);
+            UIManager.Instance.OnUpdate(deltaTime);
+            PoolManager.Instance.OnUpdate(deltaTime);
+
+            // 逻辑层更新
             if (!m_IsFighting)
             {
                 return;
             }
-
             m_Player.OnUpdate(deltaTime);
             m_EnemySpawnTimer += deltaTime;
             if (m_EnemySpawnTimer >= 10)
