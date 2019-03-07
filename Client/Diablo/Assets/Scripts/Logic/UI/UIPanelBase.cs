@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System;
 
-namespace Framework
+namespace Logic.UI
 {
     // 所有UI面板继承该类，不能使用Unity自带的Awake、Start、Update
     public abstract class UIPanelBase : MonoBehaviour
@@ -16,22 +16,22 @@ namespace Framework
             }
         }
 
-        protected virtual void OnCreate(object param)
+        public virtual void OnCreate()
         {
 
         }
 
-        protected virtual void OnOpen(object param)
+        public virtual void OnOpen(object param)
         {
 
         }
 
-        protected virtual void OnUpdate(float deltaTime)
+        public virtual void OnUpdate(float deltaTime)
         {
 
         }
 
-        protected virtual void OnClose(object param)
+        public virtual void OnClose(object param)
         {
 
         }

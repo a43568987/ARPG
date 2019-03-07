@@ -8,6 +8,8 @@ namespace Logic
     {
         private void Awake()
         {
+            DontDestroyOnLoad(gameObject);
+
             // 初始化Unity设置: 锁帧、后台运行、高质量骨骼动画
             Application.runInBackground = true;
             Application.targetFrameRate = 60;

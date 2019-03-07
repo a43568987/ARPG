@@ -177,7 +177,7 @@ public class CharacterController{
 
     private Enemy GetEnemy()
     {
-        return Logic.GameManager.Instance.EnemyDic[m_SelectedEnemyGO];
+        return Logic.GameManager.Instance.EnemyDict[m_SelectedEnemyGO];
     }
 
     private void CharacterDead()
