@@ -25,5 +25,10 @@ namespace Framework
                 Get(prefabPath, prefabName);
             }
         }
+
+        public void OnUpdate(float deltaTime)
+        {
+
+        }
     }
 }
