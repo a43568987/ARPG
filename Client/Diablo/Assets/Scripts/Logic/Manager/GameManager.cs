@@ -45,7 +45,6 @@ namespace Logic
             {
                 return;
             }
-            TimerManager.Instance.OnUpdate(deltaTime);
             m_Player.OnUpdate(deltaTime);
 
             EnemySpawn(deltaTime);
