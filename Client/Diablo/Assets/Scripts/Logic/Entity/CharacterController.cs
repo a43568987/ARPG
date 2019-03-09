@@ -16,9 +16,9 @@ public class CharacterController{
         m_CharacterData = data;
     }
 
-    private float m_TimerA = 0;
+    private int m_TimerA = 0;
     private bool m_CDA = false;
-    private float m_TimerB = 0;
+    private int m_TimerB = 0;
     private bool m_CDB = false;
 
     // Use this for initialization
@@ -144,16 +144,12 @@ public class CharacterController{
                 if (m_SelectedEnemyGO != null && !this.GetEnemy().GetData().m_IsDead)
                     this.GetEnemy().GetController().GetHurt(m_CharacterData.m_Attack, m_CharacterData.m_Defend);
                 m_CDA = true;
+                m_TimerA = SetTimer(0.5f);
             }
         }
-        if (m_CDA == true)
-        {
-            m_TimerA += Time.deltaTime;
-            if (m_TimerA >= 0.5)
-            {
-                m_CDA = false;
-                m_TimerA = 0;
-            }
+        if (Framework.TimerManager.Instance.IsOver(m_TimerA))
+        {   
+            m_CDA = false;
         }
         if ((animatorInfo.normalizedTime >= 0.5f) && (animatorInfo.IsName("Attack_Style_B")))
         {
@@ -162,17 +158,18 @@ public class CharacterController{
                 if (m_SelectedEnemyGO != null && !this.GetEnemy().GetData().m_IsDead)
                     this.GetEnemy().GetController().GetHurt(m_CharacterData.m_Attack, m_CharacterData.m_Defend);
                 m_CDB = true;
+                m_TimerB = SetTimer(0.5f);
             }
         }
-        if (m_CDB == true)
+        if (Framework.TimerManager.Instance.IsOver(m_TimerB))
         {
-            m_TimerB += Time.deltaTime;
-            if (m_TimerB >= 0.5)
-            {
-                m_CDB = false;
-                m_TimerB = 0;
-            }
+            m_CDB = false;
         }
+    }
+
+    private int SetTimer(float delay)
+    {
+        return Framework.TimerManager.Instance.AddTimer(delay, null);
     }
 
     private Enemy GetEnemy()

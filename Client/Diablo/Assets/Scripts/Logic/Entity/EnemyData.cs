@@ -5,7 +5,6 @@ using UnityEngine;
 public class EnemyData{
 
     //敌人属性信息
-    private EnemyController m_EnemyAI = new EnemyController();
 
     public float m_Health { set; get; }
     public float m_Attack { set; get; }
@@ -13,7 +12,7 @@ public class EnemyData{
 
     public bool m_IsDead = false;
 
-    private float m_Timer = 0;
+    private int m_Timer = 0;
 
     // Use this for initialization
     public void OnInitialize()
@@ -27,12 +26,17 @@ public class EnemyData{
     {
         if(m_Health <= 0)
         {
-            m_Timer += Time.deltaTime;
-            if (m_Timer > 3)
+            if(m_Timer == 0)
+            {
+                m_Timer = Framework.TimerManager.Instance.AddTimer(3, null);
+            }
+            if (Framework.TimerManager.Instance.IsOver(m_Timer))
             {
                 m_IsDead = true;
             }
         }
+
+        
     }
 
     public float GetHealth()

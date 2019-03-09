@@ -24,11 +24,13 @@ namespace Logic
         public void OnInitialize()
         {
             EnemyDict = new Dictionary<GameObject, Enemy>();
-
+            EnemyPreLoad(5);
             EventManager.Instance.AddListener(GameEvent.c_LaunchGame, OnLaunchGame);
-
+            ObjectPool.Init();
             UIManager.Instance.RegisterAllUI();
             UIManager.Instance.OpenUI(EPanelID.LaunchPanel);
+
+            
         }
 
         public void OnUpdate(float deltaTime)
@@ -37,13 +39,21 @@ namespace Logic
             {
                 return;
             }
-
+            TimerManager.Instance.OnUpdate(deltaTime);
             m_Player.OnUpdate(deltaTime);
+
+            EnemySpawn(deltaTime);
+
+        }
+
+        private void EnemySpawn(float deltaTime)
+        {
             m_EnemySpawnTimer += deltaTime;
             if (m_EnemySpawnTimer >= 10)
             {
                 m_EnemySpawnTimer = 0;
                 Enemy m_Enemy = new Enemy();
+                m_Enemy.GetController().SetEnemy(PoolManager.Instance.Get("Prefab/Enemy/", "Enemy"));
                 m_Enemy.OnInitialize();
                 m_Enemy.GetController().SetController(m_Player.GetController());
                 m_Enemies.Add(m_Enemy);
@@ -51,13 +61,19 @@ namespace Logic
             }
             for (int i = 0; i < m_Enemies.Count; i++)
             {
-                m_Enemies[i].OnUpdate(deltaTime);
-                if (m_Enemies[i].GetData().m_IsDead == true)
+                if (m_Enemies[i].GetController().GetEnemy().activeInHierarchy)
+                    m_Enemies[i].OnUpdate(deltaTime);
+                else
                 {
-                    GameObject.Destroy(m_Enemies[i].GetController().GetEnemy());
+                    EnemyDict.Remove(m_Enemies[i].GetController().GetEnemy());
                     m_Enemies.Remove(m_Enemies[i]);
                 }
             }
+        }
+
+        private void EnemyPreLoad(int count)
+        {
+            PoolManager.Instance.Preload("Prefab/Enemy/","Enemy",count);
         }
 
         private void OnLaunchGame(object param)
