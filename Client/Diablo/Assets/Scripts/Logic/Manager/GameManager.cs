@@ -43,6 +43,7 @@ namespace Logic
             {
                 return;
             }
+            
             m_Player.OnUpdate(deltaTime);
             m_EnemySpawnTimer += deltaTime;
             if (m_EnemySpawnTimer >= 10)
@@ -73,7 +74,9 @@ namespace Logic
                 m_IsFighting = true;
                 m_Player = new Character();
                 m_Player.OnInitialize();
+                UIManager.Instance.OpenUI(EPanelID.PanelHead);
             }));
+            
         }
 
         private IEnumerator SwitchScene(string sceneName, Action action)
@@ -88,6 +91,10 @@ namespace Logic
             {
                 action.Invoke();
             }
+        }
+        public Character GetPlayer()
+        {
+            return m_Player;
         }
     }
 }

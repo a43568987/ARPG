@@ -7,6 +7,7 @@ namespace Logic.UI
     public enum EPanelID
     {
         LaunchPanel,
+        PanelHead,
     }
 
     public class UIManager : Singleton<UIManager>
@@ -20,8 +21,11 @@ namespace Logic.UI
             GameObject root = GameObject.Find("UIRoot");
             Object.DontDestroyOnLoad(root);
             var panels = root.GetComponentsInChildren<UIPanelBase>(true);
+
+            //Debug.Log(panels.Length);
             foreach (var entry in panels)
             {
+                //Debug.Log(entry);
                 entry.OnCreate();
                 // 默认关闭面板
                 entry.gameObject.SetActive(false);
