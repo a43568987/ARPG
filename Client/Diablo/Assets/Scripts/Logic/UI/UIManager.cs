@@ -11,7 +11,7 @@ namespace Logic.UI
 
     public class UIManager : Singleton<UIManager>
     {
-        private Dictionary<EPanelID, UIPanelBase> m_UIDict = new Dictionary<EPanelID, UIPanelBase>();
+        private Dictionary<EPanelID, UIPanelBase> m_UIDict = new Dictionary<EPanelID, UIPanelBase>();//加一行注释
 
         public void RegisterAllUI()
         {
