@@ -90,7 +90,7 @@ namespace Logic
                 m_IsFighting = true;
                 m_Player = new Character();
                 m_Player.OnInitialize();
-                UIManager.Instance.OpenUI(EPanelID.PanelHead);
+                UIManager.Instance.OpenUI(EPanelID.HeadPanel);
             }));
             
         }

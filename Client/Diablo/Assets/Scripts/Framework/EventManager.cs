@@ -46,7 +46,6 @@ namespace Framework
             {
                 foreach (var entry in handlerList)
                 {
-                    Debug.Log(entry);
                     entry.Invoke(param);
                 }
             }

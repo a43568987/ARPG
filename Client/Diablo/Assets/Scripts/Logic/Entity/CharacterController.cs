@@ -42,12 +42,7 @@ public class CharacterController{
     public void GetHurt(float attack, float defend)
     {
         m_CharacterData.m_Health -= attack * (1 - defend / 100);
-        SendEvent(null);
-    }
-
-    public void SendEvent(object param)//受到伤害就更新血条ui
-    {
-        EventManager.Instance.FireEvent(GameEvent.c_UpdateBloodUI, param);
+        EventManager.Instance.FireEvent(GameEvent.c_UpdateBloodUI, null);
     }
 
     private void CharacterControl()
